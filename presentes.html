@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lista de Presentes - Letícia & João</title>
+
+  <link rel="stylesheet" href="dist/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="js/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --gold: #e6c872;
+      --cream: #fff9e3;
+      --dark: #111827;
+    }
+
+    /* layout base para empurrar o footer pro fim */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      flex: 1;
+    }
+
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+    header.page-header {
+    text-align: center;
+    padding-top: 2.25rem;
+    padding-bottom: 2.5rem; /* aumentei o espaço abaixo */
+    }
+
+    header.page-header {
+    text-align: center;
+    padding-top: 2.25rem;
+    padding-bottom: 2.5rem; /* aumentei o espaço abaixo */
+    }
+
+    footer {
+    margin-top: auto;
+    background: #111827;
+    color: #fff;
+    text-align: center;
+    padding: 2.5rem 1rem; /* aumentei a grossura */
+    }
+    footer p {
+    margin: 0.35rem 0;
+    }
+
+
+    .cards-grid {
+      display: flex; /* Change grid to flex for inline layout */
+      flex-wrap: wrap; /* Allow wrapping if necessary */
+      gap: 1.25rem; /* Maintain spacing between cards */
+      justify-content: center; /* Center-align cards */
+    }
+
+    .card {
+      width: 300px; /* Set a fixed width for all cards */
+      height: auto; /* Allow height to adjust based on content */
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Ensure content starts at the top */
+      align-items: center;
+    }
+    .card img {
+      flex-shrink: 0; /* Prevent image from affecting text placement */
+      margin-bottom: 0.75rem;
+      max-height: 150px; /* Limit image height for consistency */
+    }
+    .card h2, .card p.desc, .card p.price {
+      margin: 0.35rem 0; /* Ensure consistent spacing */
+      text-align: center; /* Center-align text */
+    }
+    .btn-present {
+      margin-top: auto; /* Push button to the bottom */
+      align-self: stretch; /* Make button span full width */
+    }
+
+    /* Modal overlay com animação */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.55);
+      z-index: 9999;
+      padding: 1.25rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 100%;
+      padding: 1.5rem;
+      text-align: center;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .modal-overlay.show .modal {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    header.page-header {
+    text-align: center;
+    padding-top: 2.25rem;
+    padding-bottom: 2.5rem;
+    }
+
+    header.page-header p {
+    margin-top: 0.75rem; /* espaço abaixo do subtítulo */
+    }
+
+    header.page-header a {
+    margin-top: 2rem; /* agora o botão Voltar fica bem afastado do texto */
+    display: inline-block;
+    }
+
+    .btn-present {
+    margin-top: auto;
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 9999px;
+    background: linear-gradient(180deg, #e6c872, #d8b85a);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out; /* animação suave */
+    }
+
+    .btn-present:hover {
+    background: linear-gradient(180deg, #d4b44e, #bfa141);
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(191,161,65,0.35);
+    }
+
+    .modal h3 { color: var(--gold); margin-bottom: 0.5rem; }
+    .modal p { margin: 0.25rem 0; }
+    #qrcode { margin: 1.25rem auto; display: flex; justify-content: center; }
+
+    .actions { display: grid; gap: 0.5rem; margin-top: 0.75rem; }
+    .copy-btn { background: var(--gold); border: none; padding: 0.75rem; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; }
+    .close-btn { background: #374151; border: none; padding: 0.75rem; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; }
+
+    footer { margin-top: auto; }
+  </style>
+</head>
+<body class="text-gray-800" style="background: linear-gradient(180deg, #fff9e3 0%, #f7d297 100%);">
+
+  <!-- Header -->
+  <header class="page-header">
+    <h1 class="text-4xl font-serif text-butter-gold">Lista de Presentes</h1>
+    <p class="text-lg">Escolha um presente especial para celebrar conosco 💛</p>
+    <a href="index.html" class="mt-4 inline-block bg-butter-gold hover:bg-butter-yellow text-white font-semibold px-6 py-2 rounded-full shadow transition-all duration-300">Voltar</a>
+  </header>
+
+  <!-- Conteúdo -->
+  <div class="page-wrap">
+
+    <!-- Grid de cards -->
+    <main class="cards-grid">
+
+      <!-- CARD 1 -->
+      <article class="card">
+        <img src="images/sanduichera.jpg" alt="Sanduicheira">
+        <h2 class="font-serif">Sanduicheira Brunch Time</h2>
+        <p class="desc">Elgin Grill Antiaderente 110V</p>
+        <p class="price">R$ 199,90</p>
+        <button class="btn-present" onclick="abrirModal('Sanduicheira Brunch Time', 199.90)">Presentear</button>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="card">
+        <img src="images/mesa.webp" alt="Mesa Eames">
+        <h2 class="font-serif">Mesa Charles Eames</h2>
+        <p class="desc">90cm - várias cores</p>
+        <p class="price">R$ 329,00</p>
+        <button class="btn-present" onclick="abrirModal('Mesa Charles Eames', 329.00)">Presentear</button>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="card">
+        <img src="images/praia.jpg" alt="Lua de Mel">
+        <h2 class="font-serif">Lua de Mel dos Noivos</h2>
+        <p class="desc">Contribuição para viagem ✨</p>
+        <p class="price">R$ 200,00</p>
+        <button class="btn-present" onclick="abrirModal('Lua de Mel', 200.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/lavaroupa.png" alt="Máquina de lavar roupas">
+        <h2 class="font-serif">Máquina de lavar roupas</h2>
+        <p class="desc">Máquina de Lavar Brastemp</p>
+        <p class="price">R$ 400,00</p>
+        <button class="btn-present" onclick="abrirModal('Máquina de lavar roupas', 400.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/hotelzin.png" alt="Hotelzinho para o Maverick">
+        <h2 class="font-serif">Hotelzinho para o Maverick</h2>
+        <p class="desc">Hotelzinho pro Maverick durante a lua de mel 💛</p>
+        <p class="price">R$ 150,00</p>
+        <button class="btn-present" onclick="abrirModal('Hotelzinho para o Maverick', 150.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/malas.png" alt="Malas pra viagem de lua de mel">
+        <h2 class="font-serif">Malas para viagem de Lua de Mel</h2>
+        <p class="desc">Conjunto de malas de viagem</p>
+        <p class="price">R$ 300,00</p>
+        <button class="btn-present" onclick="abrirModal('Malas pra viagem de lua de mel', 300.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/sapatera.png" alt="Sapateira organizadora">
+        <h2 class="font-serif">Sapateira</h2>
+        <p class="desc">Sapateira organizadora multiuso</p>
+        <p class="price">R$ 120,00</p>
+        <button class="btn-present" onclick="abrirModal('Sapateira organizadora', 120.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/forno.webp" alt="Forno">
+        <h2 class="font-serif">Forno Brastemp</h2>
+        <p class="desc">Forno Brastemp de embutir</p>
+        <p class="price">R$ 400,00</p>
+        <button class="btn-present" onclick="abrirModal('Forno Brastemp', 400.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/panelaarroz.webp" alt="Panela arroz">
+        <h2 class="font-serif">Panela elétrica</h2>
+        <p class="desc">Panela elétrica Mondial</p>
+        <p class="price">R$ 300,00</p>
+        <button class="btn-present" onclick="abrirModal('Panela elétrica Mondial', 300.00)">Presentear</button>
+      </article>
+      
+      <article class="card">
+        <img src="images/talher.jpg" alt="kit talheres">
+        <h2 class="font-serif">Jogo de talheres Tramontina</h2>
+        <p class="desc">Kit de talheres Tramontina</p>
+        <p class="price">R$ 370,00</p>
+        <button class="btn-present" onclick="abrirModal('Jogo de talheres Tramontina', 370.00)">Presentear</button>
+      </article>
+
+            <!-- NOVOS PRESENTES -->
+      <article class="card">
+        <img src="images/panelas.webp" alt="Conjunto de panela">
+        <h2 class="font-serif">Conjunto de panela</h2>
+        <p class="desc">Conjunto completo para cozinha</p>
+        <p class="price">R$ 150,00</p>
+        <button class="btn-present" onclick="abrirModal('Conjunto de panela', 150.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/liquidificado.JPG" alt="Liquidificador alta potência">
+        <h2 class="font-serif">Liquidificador alta potência</h2>
+        <p class="desc">Modelo potente para receitas diversas</p>
+        <p class="price">R$ 200,00</p>
+        <button class="btn-present" onclick="abrirModal('Liquidificador alta potência', 200.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/mistoquenbte.jpg" alt="Misteira">
+        <h2 class="font-serif">Misteira</h2>
+        <p class="desc">Sanduicheira e grill compacto</p>
+        <p class="price">R$ 100,00</p>
+        <button class="btn-present" onclick="abrirModal('Misteira', 100.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/lensol.webp" alt="Jogo de lençol">
+        <h2 class="font-serif">Jogo de lençol</h2>
+        <p class="desc">Conjunto de lençóis casal</p>
+        <p class="price">R$ 120,00</p>
+        <button class="btn-present" onclick="abrirModal('Jogo de lençol', 120.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/facas.png" alt="Jogo de facas">
+        <h2 class="font-serif">Jogo de facas</h2>
+        <p class="desc">Kit de facas profissionais</p>
+        <p class="price">R$ 150,00</p>
+        <button class="btn-present" onclick="abrirModal('Jogo de facas', 150.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/spa.jpg" alt="Vale massagem casal">
+        <h2 class="font-serif">Vale massagem casal</h2>
+        <p class="desc">Sessão relaxante para o casal</p>
+        <p class="price">R$ 180,00</p>
+        <button class="btn-present" onclick="abrirModal('Vale massagem casal', 180.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/ventoi.webp" alt="Ventilador">
+        <h2 class="font-serif">Ventilador</h2>
+        <p class="desc">Ventilador de mesa potente</p>
+        <p class="price">R$ 110,00</p>
+        <button class="btn-present" onclick="abrirModal('Ventilador', 110.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/ferro.webp" alt="Ferro de passar">
+        <h2 class="font-serif">Ferro de passar</h2>
+        <p class="desc">Ferro elétrico a vapor</p>
+        <p class="price">R$ 130,00</p>
+        <button class="btn-present" onclick="abrirModal('Ferro de passar', 130.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/panela.webp" alt="Panela">
+        <h2 class="font-serif">Panela</h2>
+        <p class="desc">Panela antiaderente unitária</p>
+        <p class="price">R$ 100,00</p>
+        <button class="btn-present" onclick="abrirModal('Panela', 100.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/frigidera.jpg" alt="Frigideira antiaderente">
+        <h2 class="font-serif">Frigideira antiaderente</h2>
+        <p class="desc">Frigideira moderna antiaderente</p>
+        <p class="price">R$ 99,00</p>
+        <button class="btn-present" onclick="abrirModal('Frigideira antiaderente', 99.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/tuba.webp" alt="Tábua de churrasco">
+        <h2 class="font-serif">Tábua de churrasco</h2>
+        <p class="desc">Tábua de madeira resistente</p>
+        <p class="price">R$ 140,00</p>
+        <button class="btn-present" onclick="abrirModal('Tábua de churrasco', 140.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/vasilha.webp" alt="Vasilhas de vidro">
+        <h2 class="font-serif">Vasilhas de vidro</h2>
+        <p class="desc">Conjunto de potes herméticos</p>
+        <p class="price">R$ 100,00</p>
+        <button class="btn-present" onclick="abrirModal('Vasilhas de vidro', 100.00)">Presentear</button>
+      </article>
+
+      <article class="card">
+        <img src="images/luminara.webp" alt="Luminária">
+        <h2 class="font-serif">Luminária</h2>
+        <p class="desc">Luminária moderna de mesa</p>
+        <p class="price">R$ 99,90</p>
+        <button class="btn-present" onclick="abrirModal('Luminária', 99.90)">Presentear</button>
+      </article>
+
+
+    </main>
+  </div>
+
+  <!-- Modal PIX (overlay) -->
+  <div id="pixModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+      <h3 id="modalTitulo">Presentear</h3>
+      <p id="modalValor">Valor: R$ 0,00</p>
+
+      <!-- QR -->
+      <div id="qrcode"></div>
+
+      <!-- Chave PIX abaixo do QR -->
+      <p class="text-sm" id="pixChave" style="word-break:break-all; color:#6b7280; margin-top:0.5rem;"></p>
+
+      <!-- ações -->
+      <div class="actions">
+        <button class="copy-btn" onclick="copiarChave()">Copiar chave PIX</button>
+        <button class="close-btn" onclick="fecharModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-8 mt-12">
+    <p class="text-lg font-serif mb-1">Letícia & João Vitor</p>
+    <p>© 2025 - Feito com amor 💛</p>
+  </footer>
+
+  <!-- Script da página (carregado ao fim do body) -->
+  <script src="js/presentes.js"></script>
+</body>
+</html>

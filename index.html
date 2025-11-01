@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leticia & João Vitor - Casamento</title>
+
+  <!-- Ícones e fontes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="dist/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+  /* ======== Estilos gerais existentes ======== */
+  #countdown div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFF9E3;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0.5rem;
+  }
+  #countdown div .time {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #E6C872;
+  }
+  #countdown div .label {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #666;
+  }
+
+  nav {
+    padding: 0.5rem 2rem;
+  }
+
+  nav .max-w-6xl {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .menu-links {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.125rem;
+  }
+
+  .menu-links a {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .menu-links a:hover {
+    background-color: #FFF9E3;
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 1.6rem;
+    color: #444;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  /* ======== Ajustes de Responsividade ======== */
+  @media (max-width: 768px) {
+    .menu-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #fff;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      padding: 1rem 2rem;
+    }
+
+    .menu-links.show {
+      display: flex;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .hamburger {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  header p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    header h1 { font-size: 1.8rem; }
+    header p { font-size: 1rem; padding: 0 0.5rem; }
+    a.bg-butter-gold { font-size: 1rem; padding: 0.75rem 1.5rem; }
+  }
+  </style>
+</head>
+
+<body class="bg-butter-cream text-gray-800">
+
+  <!-- Navegação -->
+  <nav class="bg-white shadow fixed w-full top-0 left-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
+      <div class="flex items-start space-x-2">
+        <span class="font-serif font-semibold text-lg">💛 Letícia & João Vitor</span>
+      </div>
+
+      <!-- Botão Hamburguer -->
+      <button class="hamburger" id="hamburger-btn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- Links -->
+      <div class="menu-links text-gray-700 font-medium" id="menu-links">
+        <a href="detalhes.html" class="flex items-center gap-2 hover:text-butter-gold transition">
+          <i class="fa-solid fa-circle-info"></i><span>Detalhes</span>
+        </a>
+        <a href="presentes.html" class="flex items-center gap-2 hover:text-butter-gold transition">
+          <i class="fa-solid fa-gift"></i><span>Presentes</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="h-16"></div>
+
+  <!-- Hero -->
+  <header class="relative min-h-screen flex items-center justify-center text-white text-center overflow-hidden">
+    <img src="images/hero2.jpg" alt="Casamento" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <div class="relative z-10 px-4 text-center drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+      <h1 class="text-5xl md:text-7xl font-serif mb-4 reveal">Letícia <span class="text-butter-yellow">&</span> João Vitor</h1>
+      <p class="text-xl md:text-2xl mb-8 reveal">É com grande emoção que convidamos você para celebrar conosco a nossa união.</p>
+
+      <div class="flex flex-col md:flex-row gap-4 justify-center mb-8 reveal">
+        <div class="flex items-center bg-gray-800 bg-opacity-80 text-white rounded-full px-6 py-3 shadow-lg">
+          <svg class="w-5 h-5 mr-2 text-butter-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M6 2a1 1 0 0 0-1 1v1H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-1V3a1 1 0 1 0-2 0v1H8V3a1 1 0 0 0-1-1zm8 5v2H6V7h8zm-8 4h8v4a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-4z"/></svg>
+          <span class="font-semibold">11 de Janeiro, 2026</span>
+        </div>
+        <div class="flex items-center bg-gray-800 bg-opacity-80 text-white rounded-full px-6 py-3 shadow-lg">
+          <svg class="w-5 h-5 mr-2 text-butter-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 0 0-6 6c0 4.418 5.373 9.09 5.601 9.295a1 1 0 0 0 1.198 0C10.627 17.09 16 12.418 16 8a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+          <span class="font-semibold">Villagio Pampulha Eventos</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 justify-center reveal">
+        <a href="#rsvp" class="bg-butter-gold hover:bg-butter-yellow text-white font-semibold px-8 py-4 rounded-full shadow-lg transition-all duration-300">
+          Confirmar Presença
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      <div class="mouse w-6 h-10 border-2 border-white rounded-full flex items-start justify-center animate-mouseMove">
+        <div class="wheel w-1 h-3 bg-white rounded-full mt-1"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contagem -->
+  <section class="py-20 bg-gradient-to-br from-butter-cream to-butter-yellow text-center">
+    <div class="max-w-4xl mx-auto px-4 reveal">
+      <h2 class="text-4xl md:text-5xl font-serif text-gray-800 mb-4 reveal">Contagem Regressiva</h2>
+      <p class="text-gray-600 mb-12 text-lg reveal">Para o nosso grande dia</p>
+      <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- Evento -->
+  <section class="py-20 bg-white text-center">
+    <h2 class="text-4xl font-serif mb-6 reveal">O Evento</h2>
+    <p class="mb-12 text-gray-600 reveal">Todos os detalhes do nosso dia especial</p>
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 px-4">
+      <div class="bg-butter-cream p-6 rounded-xl shadow hover:scale-105 hover:shadow-2xl transition-all reveal">
+        <h3 class="text-xl font-bold mb-2">Data & Horário</h3>
+        <p>11 de Janeiro, 2026</p>
+        <p>Cerimônia às 16h45</p>
+        <p>Festa até 23h</p>
+      </div>
+      <div class="bg-butter-cream p-6 rounded-xl shadow hover:scale-105 hover:shadow-2xl transition-all reveal">
+        <h3 class="text-xl font-bold mb-2">Local</h3>
+        <p>Villagio Pampulha Eventos</p>
+        <p>Belo Horizonte - MG</p>
+        <a href="https://maps.app.goo.gl/R9RLd6aW2KCUWh1n7" target="_blank" class="text-butter-gold font-medium">Ver no Google Maps</a>
+      </div>
+      <div class="bg-butter-cream p-6 rounded-xl shadow hover:scale-105 hover:shadow-2xl transition-all reveal">
+        <h3 class="text-xl font-bold mb-2">Dress Code</h3>
+        <p>Traje esporte fino</p>
+        <p>Cores suaves e tons pastel</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galeria -->
+  <section class="py-20 bg-gradient-to-br from-butter-cream to-butter-yellow">
+    <h2 class="text-4xl font-serif text-center mb-12 reveal">Nossa Galeria</h2>
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+      <img src="images/gallery1.jpg" alt="Foto 1" class="rounded-xl shadow cursor-pointer gallery-img reveal">
+      <img src="images/gallery2.jpg" alt="Foto 2" class="rounded-xl shadow cursor-pointer gallery-img reveal">
+      <img src="images/gallery3.jpg" alt="Foto 3" class="rounded-xl shadow cursor-pointer gallery-img reveal">
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp" class="py-20 bg-white text-center">
+    <h2 class="text-4xl font-serif mb-6 reveal">Sua presença tornará nosso dia ainda mais especial!</h2>
+    <p class="text-gray-600 mb-10 reveal">Clique no botão abaixo para confirmar sua presença.</p>
+    <div class="mt-20 flex justify-center reveal">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdXc0Ri_hsoHDvWmm5CY682bGjD7Gpkg9YocsZPImobA2mt9g/viewform?usp=dialog" target="_blank"
+         class="inline-block bg-butter-gold hover:bg-butter-yellow text-white font-medium px-8 py-4 rounded-full shadow-lg transition-all duration-300">
+        Confirmar Presença
+      </a>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="bg-gray-900 text-white text-center py-12">
+    <p class="text-xl font-serif mb-2">Leticia & João Vitor</p>
+    <p>© 2025 - Feito com amor 💛</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Toggle do menu hambúrguer
+    const btn = document.getElementById('hamburger-btn');
+    const menu = document.getElementById('menu-links');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('show');
+      btn.innerHTML = menu.classList.contains('show')
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+  </script>
+</body>
+</html>

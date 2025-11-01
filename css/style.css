@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom tweaks */
+html {
+  scroll-behavior: smooth;
+}
+
+.elegant-shadow {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.gallery-img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  to {
+    transform: translateY(-100vh) scale(0.6);
+    opacity: 0;
+  }
+}
+.heart {
+  position: absolute;
+  bottom: 20px;
+  font-size: 24px;
+  color: #d8db09;
+  animation: floatUp 4s ease-in forwards;
+}
+
+/* Fade-in + slide-up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Initial hidden state */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Visible state */
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Subtle shadow for countdown cards */
+.countdown-box {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+.countdown-box:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Fade animation for countdown numbers */
+@keyframes fadePulse {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.fade-number {
+  animation: fadePulse 1s ease-in-out;
+}
